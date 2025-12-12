@@ -13,7 +13,6 @@ export default function SearchBar({ onSubmit }: OnSubmitSearchBAr) {
     if (!searchEl || searchEl.trim() === "") {
       return toast.error("Please enter your search query.");
     }
-
     onSubmit(searchEl);
     event.currentTarget.reset();
   };

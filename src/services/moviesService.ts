@@ -15,6 +15,7 @@ export default async function fetchMovies (query: string): Promise<Movie[]> {
             Authorization: `Bearer ${myKey}`,
         }
     })
-    return  response.data.results
+    console.log(response.data);
+    return response.data.results
 }
 

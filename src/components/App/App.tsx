@@ -1,16 +1,22 @@
-// import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import fetchMovies from "../../services/moviesService";
-// import type { Movie } from "../../types/movies";
+import MovieGrid from "../MovieGrid/MovieGrid";
+import Loader from "../Loader/Loader";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import SearchBar from "../SearchBar/SearchBar";
+import { useState } from "react";
+import type { Movie } from "../../types/movies";
 export default function App() {
-  // const [Movies, setMovies] = useState<Movie[]>([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [isError, setError] = useState(false);
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const openModal = (movie: Movie) => selectedMovie(movie);
+  const closeModal = () => setSelectedMovie(null);
   const handleSubmit = async (query: string) => {
     try {
-      // setIsLoading(true);
-      // setError(false);
+      setIsLoading(true);
+      setIsError(false);
       const data = await fetchMovies(query);
       if (data.length === 0) {
         toast.error("No movies found for your request.");
@@ -18,15 +24,20 @@ export default function App() {
       }
       setMovies(data);
     } catch {
-      // setError(true);
+      setIsError(true);
     } finally {
-      // setIsLoading(false);
+      setIsLoading(false);
     }
   };
+
   return (
-    <>
+    <div>
       <Toaster />
       <SearchBar onSubmit={handleSubmit} />
-    </>
+      {isLoading && <Loader />}
+      {isError && <ErrorMessage />}
+      {movies.length > 0 && <MovieGrid onSelect={openModal} movies={movies} />}
+      {selectedMovie}
+    </div>
   );
 }
