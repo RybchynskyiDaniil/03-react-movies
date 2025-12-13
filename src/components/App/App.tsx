@@ -1,12 +1,12 @@
 import toast, { Toaster } from "react-hot-toast";
-import fetchMovies from "../../services/moviesService";
+import fetchMovies from "../../services/movieService";
 import MovieGrid from "../MovieGrid/MovieGrid";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import SearchBar from "../SearchBar/SearchBar";
 import MovieModal from "../MovieModal/MovieModal";
 import { useState } from "react";
-import type { Movie } from "../../types/movies";
+import type { Movie } from "../../types/movie";
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
